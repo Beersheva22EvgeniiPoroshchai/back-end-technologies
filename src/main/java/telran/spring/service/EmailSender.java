@@ -14,12 +14,11 @@ public class EmailSender implements Sender {
 @Override
 public String send(Message message) {
 		log.debug("email service received message {}", message);
-		String res = "Email sender has not received EmailMessage";
+		String res = errorMessage;
 		if (message instanceof EmailMessage) {
 			EmailMessage emailMessage = (EmailMessage) message;
 			res = String.format("email sender text: %s has been sent to email %s", emailMessage.text, emailMessage.emailAddress);
 		} else {
-			log.error("The email has wrong type");
 			throw new IllegalArgumentException(res);
 		}
 		return res;

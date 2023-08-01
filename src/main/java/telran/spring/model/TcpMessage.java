@@ -7,9 +7,10 @@ import lombok.Data;
 @Data
 public class TcpMessage extends Message {
 
-	public String hostName;
 	
-	@Min(value = 1024) @Max(5000)
-	public int port;
+	String hostName;
+	
+	@Min(value = 1024) @Max(value=5000)
+	int port;
 	
 }

@@ -3,14 +3,18 @@ package telran.spring.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import jakarta.validation.constraints.*;
+
 import lombok.Data;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
-//@JsonSubTypes(value = {@JsonSubTypes.Type(value = EmailMessage.class), @JsonSubTypes.Type(value = SmsMessage.class)})
+
 		
                 
 public class Message {
+	@NotEmpty @Pattern(regexp = "[a-z]{3,5}", message = "type value mismatches pattern")
 	public String type;
+	@NotEmpty
 	public String text;
 }
 
