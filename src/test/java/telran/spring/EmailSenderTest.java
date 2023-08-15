@@ -5,12 +5,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 
 import telran.spring.model.EmailMessage;
 import telran.spring.model.TcpMessage;
 import telran.spring.service.EmailSender;
 
-@SpringBootTest
+@SpringBootTest (classes = {EmailSender.class})
+//(properties = {"app.security.user.password=pass"})
+//@WithMockUser(username = "admin", password = "pass")
+//@TestPropertySource(properties = {"app.security.user.password=ppp"})
 class EmailSenderTest {
 	
 	@Autowired

@@ -13,7 +13,7 @@ import telran.spring.model.TcpMessage;
 
 public class TcpSender implements Sender {
 
-	@Override
+	
 	public String send(Message message) {
 		log.debug("Tcp service received message {}", message);
 		String res = errorMessage;
@@ -26,12 +26,12 @@ public class TcpSender implements Sender {
 		return res;
 	}
 
-	@Override
+	
 	public String getMessageTypeString() {
 	return "tcp";
 	}
 
-	@Override
+	
 	public Class<? extends Message> getMessageTypeObject() {
 	return TcpMessage.class;
 	}

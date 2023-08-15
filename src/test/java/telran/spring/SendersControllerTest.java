@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,31 +19,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import telran.spring.controller.SenderController;
 import telran.spring.model.Message;
+
 import telran.spring.service.Sender;
 
 @Service
 class MockSender implements Sender {
 
-	@Override
+	
 	public String send(Message message) {
 		// TODO Auto-generated method stub
 		return "test";
 	}
 
-	@Override
+	
 	public String getMessageTypeString() {
 		// TODO Auto-generated method stub
 		return "test";
 	}
 
-	@Override
+	
 	public Class<? extends Message> getMessageTypeObject() {
 		// TODO Auto-generated method stub
 		return Message.class;
 	}
 }
 
-
+@WithMockUser(roles = {"USER", "ADMIN"}, username = "admin")
 @WebMvcTest({SenderController.class, MockSender.class})  // load beans into the AppContext, just for testing part of the web, all we need, except web server
 class SendersControllerTest {
 
@@ -80,7 +82,15 @@ void setUp() {
 		String response = getRequestBase(messageJson).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 		assertEquals("test", response);
 	}
-
+	
+	
+	@Test
+	@WithMockUser(roles = {"USER"}, username = "admin")
+	void sendFlow403() throws Exception {
+		String messageJson = mapper.writeValueAsString(message);
+		getRequestBase(messageJson).andExpect(status().isForbidden());
+	
+	}
 
 	private ResultActions getRequestBase(String messageJson) throws Exception {
 		return mockMvc.perform(post(sendUrl).contentType(MediaType.APPLICATION_JSON).content(messageJson)).

@@ -12,7 +12,7 @@ import telran.spring.model.SmsMessage;
 
 public class SmsSender implements Sender {
 
-	@Override
+	
 	public String send(Message message) {
 		log.debug("SMS service received message {}", message);
 		String res = errorMessage;
@@ -26,13 +26,13 @@ public class SmsSender implements Sender {
 		return res;
 	}
 
-	@Override
+	
 	public String getMessageTypeString() {
 		// TODO Auto-generated method stub
 		return "sms";
 	}
 
-	@Override
+	
 	public Class<? extends Message> getMessageTypeObject() {
 		return SmsMessage.class;
 	}

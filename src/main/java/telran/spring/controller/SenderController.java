@@ -68,14 +68,12 @@ public class SenderController {
 		return sendersMap.containsKey(type);
 		}
 	
-	
 	@PostConstruct
 	void init() {
 		sendersMap = sendersList.stream().collect(Collectors.toMap(Sender:: getMessageTypeString, s -> s));
 		sendersList.forEach(s -> mapper.registerSubtypes(s.getMessageTypeObject()));
 		log.info("registered senders: {}", sendersMap.keySet());
 	}
-	
 	
 	@PreDestroy
 	void shutdown() {

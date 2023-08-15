@@ -11,7 +11,7 @@ import telran.spring.model.Message;
 
 public class EmailSender implements Sender {
 
-@Override
+
 public String send(Message message) {
 		log.debug("email service received message {}", message);
 		String res = errorMessage;
@@ -24,12 +24,12 @@ public String send(Message message) {
 		return res;
 	}
 
-@Override
+
 public String getMessageTypeString() {
 	return "email";
 }
 
-@Override
+
 public Class<? extends Message> getMessageTypeObject() {
 	return EmailMessage.class;
 }
