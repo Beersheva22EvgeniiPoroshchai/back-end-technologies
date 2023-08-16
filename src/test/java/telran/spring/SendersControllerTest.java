@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import telran.spring.controller.SenderController;
 import telran.spring.model.Message;
-
+import telran.spring.security.jwt.*;
 import telran.spring.service.Sender;
 
 @Service
@@ -45,7 +47,9 @@ class MockSender implements Sender {
 }
 
 @WithMockUser(roles = {"USER", "ADMIN"}, username = "admin")
-@WebMvcTest({SenderController.class, MockSender.class})  // load beans into the AppContext, just for testing part of the web, all we need, except web server
+@WebMvcTest(value = {SenderController.class, MockSender.class, SecurityConfiguration.class},excludeFilters =
+@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+classes = JwtFilter.class))  // load beans into the AppContext, just for testing part of the web, all we need, except web server
 class SendersControllerTest {
 
 	
